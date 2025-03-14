@@ -1,9 +1,6 @@
 ### dotenv ###
 .env
 
-### IDE ###
-.idea
-
 ### macOS ###
 # General
 .DS_Store
