@@ -1,0 +1,26 @@
+[
+    {
+        "courseCode": "CS101",
+        "courseTitle": "Introduction to Computer Science",
+        "courseDescription": "course cover fundamental programming concept algorithm problem solving technique using python",
+        "prerequisites": "None",
+        "credits": "3",
+        "clusters": [
+            1,
+            3,
+            5
+        ]
+    },
+    {
+        "courseCode": "CS101",
+        "courseTitle": "Introduction to Computer Science",
+        "courseDescription": "course cover fundamental programming concept algorithm problem solving technique using python",
+        "prerequisites": "None",
+        "credits": "3",
+        "clusters": [
+            1,
+            3,
+            5
+        ]
+    }
+]

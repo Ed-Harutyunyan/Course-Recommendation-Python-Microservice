@@ -1,0 +1,50 @@
+[
+    {
+      "title": "Introduction to Python Programming",
+      "description": "This beginner-level course introduces the fundamentals of Python, one of today’s most popular programming languages. Students learn basic syntax, data types, control structures, and functions through hands-on coding exercises. By the end of the course, participants can write simple Python scripts and solve basic programming challenges."
+    },
+    {
+      "title": "Data Structures and Algorithms",
+      "description": "This course provides a comprehensive introduction to data structures such as arrays, linked lists, stacks, queues, trees, and graphs, along with algorithm design and analysis. Real-world examples and coding assignments prepare students to solve complex computational problems."
+    },
+    {
+      "title": "Machine Learning Fundamentals",
+      "description": "Focusing on both theory and practice, this course covers supervised and unsupervised learning techniques. Learners explore topics such as regression, classification, clustering, and model evaluation using real datasets and libraries like scikit-learn."
+    },
+    {
+      "title": "Deep Learning for Computer Vision",
+      "description": "This advanced course dives into the design and training of deep neural networks specifically for image analysis. Topics include convolutional neural networks (CNNs), transfer learning, object detection, and image segmentation through hands-on projects."
+    },
+    {
+      "title": "Web Development Bootcamp",
+      "description": "An all-in-one course covering both front-end and back-end web development. Students learn HTML, CSS, JavaScript, and server-side programming with modern frameworks through real-world projects and website deployments."
+    },
+    {
+      "title": "Digital Marketing Strategies",
+      "description": "This course explores contemporary digital marketing techniques, including SEO, social media campaigns, and content marketing. Learners gain data-driven insights for boosting online presence and customer engagement with practical assignments and case studies."
+    },
+    {
+      "title": "Recommender Systems: Theory and Practice",
+      "description": "An in-depth exploration of recommendation algorithms covering collaborative filtering, content-based methods, and hybrid approaches. Students work on hands-on projects to build and evaluate recommender models as used in e-commerce, media streaming, and more."
+    },
+    {
+      "title": "Business Analytics and Data Visualization",
+      "description": "This course equips professionals with tools and techniques for analyzing business data and creating impactful visualizations using Excel, Tableau, and Power BI. Real-world projects help students generate insights and make data-driven decisions."
+    },
+    {
+      "title": "Advanced Java Programming",
+      "description": "This course covers advanced Java topics such as concurrency, memory management, and design patterns. Through in-depth projects, learners develop robust applications and gain insights into best practices in enterprise-level Java development."
+    },
+    {
+      "title": "Cloud Computing Essentials",
+      "description": "An introductory course to cloud computing concepts, services, and deployment models. The curriculum focuses on major platforms such as AWS, Azure, and Google Cloud, and includes hands-on labs to build and deploy cloud-based applications."
+    },
+    {
+      "title": "Cybersecurity Fundamentals",
+      "description": "This course covers the core principles of cybersecurity including threat analysis, risk management, and securing information systems. Learners gain practical experience with security protocols and best practices to protect digital assets."
+    },
+    {
+      "title": "Mobile App Development with Flutter",
+      "description": "Learn how to build cross-platform mobile applications using Flutter and Dart. This course covers UI design, state management, integration of APIs, and deployment to both Android and iOS platforms through practical projects."
+    }
+]

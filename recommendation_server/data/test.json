@@ -1,0 +1,36 @@
+[
+    {
+        "course_title": "EVIDENCE-BASED MATERNAL & CHILD HEALTH NURSING",
+        "course_code": "BSN202",
+        "prerequisites": "BSN101,BSN201",
+        "section": "0",
+        "session": "15w",
+        "credits": "3",
+        "campus": "AUA Main Campus",
+        "instructor": "Jennifer Dods",
+        "times": "MON 3:30pm-6:20pm",
+        "taken_seats": "19/25",
+        "spaces_waiting": "0",
+        "delivery_method": "",
+        "dist_learning": "",
+        "location": "Classroom 407E Paramaz Avedissian Building",
+        "course_description": "This course focuses on improving patient outcomes through an evidence-based nursing practice approach to meet the needs of the childbearing family and the ill child. The role of the nurse as a care provider, advocate, health educator, and nurturer in the hospital, outpatient, and community settings is stressed. It is tailored to the needs of the learners, building on their clinical experience. The course uses the nursing process as a framework of practice. Maternal health covers holistic assessment, evidence-based intervention, and evaluation of reproductive health issues of the childbearing family from conception to the neonatal period."
+    },
+  {
+    "course_title": "HEALTH AND NURSING INFORMATICS",
+    "course_code": "BSN203",
+    "prerequisites": "",
+    "section": "0",
+    "session": "15w",
+    "credits": "3",
+    "campus": "AUA Main Campus",
+    "instructor": "Jennifer Dods",
+    "times": "WED 3:30pm-6:20pm",
+    "taken_seats": "10/25",
+    "spaces_waiting": "0",
+    "delivery_method": "",
+    "dist_learning": "",
+    "location": "Computer Lab 001M Main Building",
+    "course_description": "This course explores the dynamics of combining information technology with nursing practice mainly the use of information systems to improve the quality and safety of patient care. The course content is divided into three modules: module 1 introduces participants to the role of electronic health records, mobile health, and telehealth in supporting and improving the quality of patient care; module 2 describes the use of electronic Decision Support system to enhance patient safety and evidence-based practice; and module 3 focuses on the optimal use of data, information, and knowledge to advance individual and public health."
+  }
+]
