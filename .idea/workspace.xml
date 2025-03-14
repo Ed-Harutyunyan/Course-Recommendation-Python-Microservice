@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="967725a1-616a-4dc4-baa6-232ac3cd77ba" name="Changes" comment="update .gitignore" />
+    <list default="true" id="967725a1-616a-4dc4-baa6-232ac3cd77ba" name="Changes" comment="test" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -51,7 +51,6 @@
     "Python.run.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -78,7 +77,7 @@
       <option name="presentableId" value="Default" />
       <updated>1741949531575</updated>
       <workItem from="1741949532582" duration="928000" />
-      <workItem from="1741950469462" duration="810000" />
+      <workItem from="1741950469462" duration="1153000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit: Recommender and server to communicate with the backend">
       <option name="closed" value="true" />
@@ -96,7 +95,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741951196491</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="test">
+      <option name="closed" value="true" />
+      <created>1741951310835</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1741951310835</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -116,7 +123,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial Commit: Recommender and server to communicate with the backend" />
     <MESSAGE value="update .gitignore" />
-    <option name="LAST_COMMIT_MESSAGE" value="update .gitignore" />
+    <MESSAGE value="test" />
+    <option name="LAST_COMMIT_MESSAGE" value="test" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Recommendation_System$run.coverage" NAME="run Coverage Results" MODIFIED="1741949684727" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/recommendation_server" />
