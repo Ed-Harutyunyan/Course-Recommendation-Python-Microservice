@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 
 get_url = "http://localhost:8080/api/course/details"
 load_dotenv(".env")
+#
 
 headers = {"Authorization": f"Bearer {os.getenv('SERVICE_JWT')}"}
 
