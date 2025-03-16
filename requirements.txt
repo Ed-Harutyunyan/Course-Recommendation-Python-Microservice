@@ -1,0 +1,6 @@
+Flask==3.1.0
+nltk==3.9.1
+openai==1.66.3
+python-dotenv==1.0.1
+qdrant_client==1.13.3
+Requests==2.32.3
