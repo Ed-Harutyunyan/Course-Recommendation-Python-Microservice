@@ -6,6 +6,16 @@ from qdrant_client import QdrantClient
 from qdrant_client.http.models import VectorParams, Distance, PointStruct
 import json
 
+qdrant_client = QdrantClient(
+        url=os.getenv("QDRANT_URL"),
+        api_key=os.getenv("QDRANT_API_KEY"),
+        https=True
+    )
+
+openai_client = openai.Client(
+        api_key=os.getenv("OPENAI_API_KEY")
+    )
+
 def vectorize_courses(courses):
 
     save_processed_courses(courses)
@@ -14,16 +24,6 @@ def vectorize_courses(courses):
 
     collection_name = "courses_collection"
     embedding_dimension = 1536
-
-    qdrant_client = QdrantClient(
-        url=os.getenv("QDRANT_URL"),
-        api_key=os.getenv("QDRANT_API_KEY"),
-        https=True
-    )
-
-    openai_client = openai.Client(
-        api_key=os.getenv("OPENAI_API_KEY")
-    )
 
     collections = qdrant_client.get_collections().collections
     if not qdrant_client.collection_exists(collection_name):
@@ -54,4 +54,3 @@ def vectorize_courses(courses):
         points.append(point)
 
     qdrant_client.upsert(collection_name=collection_name, points=points)
-

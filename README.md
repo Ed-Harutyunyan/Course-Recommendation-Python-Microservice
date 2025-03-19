@@ -38,6 +38,12 @@ pip install -r requirements.txt
 Execute ` run.py ` file to start the Python Flask Server.
 Ensure  that port 5000 is not used by other services. If yes, terminate or change the port in `config.py` file to another open port
 
+#### Qdrant Cloud
+
+To see the vectorized data go to:
+```text
+https://ae74fd20-5f2d-46a0-a68f-dc395da95901.eu-central-1-0.aws.cloud.qdrant.io:6333/dashboard#/collections/courses_collection#points
+```
 
 ## API Reference
 
