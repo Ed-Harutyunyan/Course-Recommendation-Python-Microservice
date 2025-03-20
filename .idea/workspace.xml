@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="967725a1-616a-4dc4-baa6-232ac3cd77ba" name="Changes" comment="updated recommender to work with keywords and passed courses">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="967725a1-616a-4dc4-baa6-232ac3cd77ba" name="Changes" comment="updated recommender to work with keywords and passed courses" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -180,7 +178,7 @@
       <workItem from="1741949532582" duration="928000" />
       <workItem from="1741950469462" duration="1153000" />
       <workItem from="1741951627210" duration="14310000" />
-      <workItem from="1742379175512" duration="9558000" />
+      <workItem from="1742379175512" duration="10025000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit: Recommender and server to communicate with the backend">
       <option name="closed" value="true" />
