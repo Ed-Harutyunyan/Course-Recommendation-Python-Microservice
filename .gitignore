@@ -220,3 +220,4 @@ pyrightconfig.json
 [Ss]cripts
 pyvenv.cfg
 pip-selfcheck.json
+.idea/workspace.xml
