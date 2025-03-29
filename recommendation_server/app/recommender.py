@@ -1,8 +1,25 @@
+import json
+
+from infisical_sdk import InfisicalSDKClient
 from qdrant_client import QdrantClient
 from qdrant_client.models import Filter, HasIdCondition
 import os
 import openai
 from dotenv import load_dotenv
+
+# client = InfisicalSDKClient(host="https://app.infisical.com")
+#
+# client.auth.universal_auth.login(
+#     client_id=os.getenv("INFISICAL_CLIENT_ID"),
+#     client_secret=os.getenv("INFISICAL_CLIENT_SECRET")
+# )
+#
+# secret = client.secrets.get_secret_by_name(
+#     secret_name="OPENAI_API",
+#     project_id=os.getenv("INFISICAL_PROJECT_ID"),
+#     environment_slug="dev",
+#     secret_path="/"
+# )
 
 load_dotenv("../../.env")
 
@@ -19,7 +36,8 @@ openai_client = openai.Client(
     api_key=os.getenv("OPENAI_API_KEY")
 )
 
-def generate_recommendations(query_text: str, top_k: int = 3):
+
+def generate_recommendations_by_keywords(query_text: str, top_k: int):
 
     search_response = openai_client.embeddings.create(
         model="text-embedding-3-small",
@@ -33,21 +51,18 @@ def generate_recommendations(query_text: str, top_k: int = 3):
         query_filter=None
     )
 
-    # FOR TESTING THE RESPONSE FROM QDRANT
-    print(search_results)
-
     recommendations = []
     for result in search_results.points:
         recommendations.append({
             "id": result.id,
             "title": result.payload.get("title"),
-            "description": result.payload.get("description"),
-            "score": result.score
+            "description": result.payload.get("description")
         })
 
     return recommendations
 
-def generate_recommendations_from_passed_courses(passed_ids, possible_ids, top_k: int = 3):
+
+def generate_recommendations_from_passed_courses(passed_ids, possible_ids, top_k: int):
 
     passed_courses = qdrant_client.retrieve(
         collection_name=collection_name,
@@ -77,18 +92,16 @@ def generate_recommendations_from_passed_courses(passed_ids, possible_ids, top_k
                 limit=top_k,
                 query_filter=query_filter
             )
-            print(search_results)
 
             all_results.extend(search_results.points)
         else:
             raise ValueError("Descriptions list cannot be empty or None")
-    print(all_results)
+
     unique_results = {}
     for result in all_results:
         if result.id not in unique_results or result.score > unique_results[result.id].score:
             unique_results[result.id] = result
 
-    print(unique_results)
     final_results = sorted(unique_results.values(), key=lambda x: x.score, reverse=True)
 
     recommendations = []
@@ -100,14 +113,5 @@ def generate_recommendations_from_passed_courses(passed_ids, possible_ids, top_k
             "score": result.score
         })
 
-    print("Recommending courses...")
     return recommendations
-
-
-if __name__ == '__main__':
-    print("Generating recommendations...")
-    passed_ids = [2, 3, 4]
-    possible_ids = [5, 6, 7, 8, 9]
-    print(generate_recommendations_from_passed_courses(passed_ids, possible_ids))
-
 
