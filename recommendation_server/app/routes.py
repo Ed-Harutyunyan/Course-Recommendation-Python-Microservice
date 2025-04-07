@@ -1,6 +1,5 @@
 from dotenv import load_dotenv
-from flask import Blueprint, request, jsonify
-import requests
+from flask import Blueprint, request, jsonify, abort
 
 from recommendation_server.app.recommender import generate_recommendations_by_keywords, generate_recommendations_from_passed_courses
 from recommendation_server.app.vectorizer import vectorize_courses
@@ -13,6 +12,12 @@ headers = {
     "Authorization": f"Bearer {os.getenv('SERVICE_JWT')}",
     "Content-Type": "application/json"
 }
+
+@api_blueprint.before_request
+def check_authorization():
+    key = request.headers.get("PYTHON_AUTHORISATION_API_KEY")
+    if key != os.getenv("PYTHON_AUTHORISATION_API_KEY"):
+        abort(403)
 
 
 @api_blueprint.route('/recommend/keyword', methods=['POST'])
