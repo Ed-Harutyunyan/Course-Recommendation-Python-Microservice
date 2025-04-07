@@ -40,14 +40,14 @@ qdrant_url = client.secrets.get_secret_by_name(
 collection_name = "courses_collection"
 
 qdrant_client = QdrantClient(
-    url=os.getenv("QDRANT_URL"),
-    api_key=os.getenv("QDRANT_API_KEY"),
+    url=qdrant_url.secretValue,
+    api_key=qdrant_key.secretValue,
     https=True
 )
 
 
 openai_client = openai.Client(
-    api_key=os.getenv("OPENAI_API_KEY")
+    api_key=openai_key.secretValue,
 )
 
 
@@ -70,7 +70,8 @@ def generate_recommendations_by_keywords(query_text: str, top_k: int):
         recommendations.append({
             "id": result.id,
             "title": result.payload.get("title"),
-            "description": result.payload.get("description")
+            "description": result.payload.get("description"),
+            "score": result.score
         })
 
     return recommendations
@@ -129,3 +130,5 @@ def generate_recommendations_from_passed_courses(passed_ids, possible_ids, top_k
 
     return recommendations
 
+if __name__ == '__main__':
+    print(openai_key, qdrant_key, qdrant_url)
