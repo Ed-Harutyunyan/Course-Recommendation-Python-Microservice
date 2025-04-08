@@ -3,15 +3,14 @@ from flask import Blueprint, request, jsonify, abort
 
 from recommendation_server.app.recommender import generate_recommendations_by_keywords, generate_recommendations_from_passed_courses
 from recommendation_server.app.vectorizer import vectorize_courses
-import os
 
 load_dotenv("../../.env")
 
 api_blueprint = Blueprint('api', __name__)
-headers = {
-    "Authorization": f"Bearer {os.getenv('SERVICE_JWT')}",
-    "Content-Type": "application/json"
-}
+# headers = {
+#     "Authorization": f"Bearer {os.getenv('SERVICE_JWT')}",
+#     "Content-Type": "application/json"
+# }
 
 # @api_blueprint.before_request
 # def check_authorization():
