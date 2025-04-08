@@ -69,8 +69,9 @@ def generate_recommendations_by_keywords(query_text: str, top_k: int):
     for result in search_results.points:
         recommendations.append({
             "id": result.id,
-            "title": result.payload.get("title"),
-            "description": result.payload.get("description"),
+            "courseCode": result.payload.get('courseCode'),
+            "title": result.payload.get("courseTitle"),
+            "description": result.payload.get("courseDescription"),
             "score": result.score
         })
 

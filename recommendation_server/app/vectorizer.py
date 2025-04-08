@@ -47,7 +47,7 @@ def vectorize_courses(courses):
         )
         embedding = response.data[0].embedding
         point = PointStruct(
-            id=idx,  # TODO CHANGE TO UUID LATER
+            id=course['id'],  # TODO CHANGE TO UUID LATER
             vector=embedding,
             payload=course
         )

@@ -13,11 +13,11 @@ headers = {
     "Content-Type": "application/json"
 }
 
-@api_blueprint.before_request
-def check_authorization():
-    key = request.headers.get("PYTHON_AUTHORISATION_API_KEY")
-    if key != os.getenv("PYTHON_AUTHORISATION_API_KEY"):
-        abort(403)
+# @api_blueprint.before_request
+# def check_authorization():
+#     key = request.headers.get("PYTHON_AUTHORISATION_API_KEY")
+#     if key != os.getenv("PYTHON_AUTHORISATION_API_KEY"):
+#         abort(403)
 
 
 @api_blueprint.route('/recommend/keyword', methods=['POST'])
@@ -66,6 +66,7 @@ def recommend_by_passed():
 def vectorize():
     try:
         courses = request.get_json(force=True)
+        print(courses)
         if not courses:
             return jsonify({"error": "JSON empty"}), 400
     except Exception as e:
