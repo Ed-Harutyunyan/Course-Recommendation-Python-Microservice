@@ -1,54 +1,6 @@
-import json
-
-from infisical_sdk import InfisicalSDKClient
-from qdrant_client import QdrantClient
 from qdrant_client.models import Filter, HasIdCondition
-import os
-import openai
-from dotenv import load_dotenv
 
-load_dotenv("../../.env")
-
-client = InfisicalSDKClient(host="https://app.infisical.com")
-
-client.auth.universal_auth.login(
-    client_id=os.getenv("INFISICAL_CLIENT_ID"),
-    client_secret=os.getenv("INFISICAL_CLIENT_SECRET")
-)
-
-openai_key = client.secrets.get_secret_by_name(
-    secret_name="OPENAI_API",
-    project_id=os.getenv("INFISICAL_PROJECT_ID"),
-    environment_slug="dev",
-    secret_path="/"
-)
-
-qdrant_key = client.secrets.get_secret_by_name(
-    secret_name="QDRANT_API_KEY",
-    project_id=os.getenv("INFISICAL_PROJECT_ID"),
-    environment_slug="dev",
-    secret_path="/"
-)
-
-qdrant_url = client.secrets.get_secret_by_name(
-    secret_name="QDRANT_URL",
-    project_id=os.getenv("INFISICAL_PROJECT_ID"),
-    environment_slug="dev",
-    secret_path="/"
-)
-
-collection_name = "courses_collection"
-
-qdrant_client = QdrantClient(
-    url=qdrant_url.secretValue,
-    api_key=qdrant_key.secretValue,
-    https=True
-)
-
-
-openai_client = openai.Client(
-    api_key=openai_key.secretValue,
-)
+from recommendation_server.app.config import openai_client, qdrant_client, collection_name
 
 
 def generate_recommendations_by_keywords(query_text: str, course_ids, top_k: int):
@@ -139,6 +91,3 @@ def generate_recommendations_from_passed_courses(passed_ids, possible_ids, top_k
         })
     print(recommendations)
     return recommendations
-
-if __name__ == '__main__':
-    print(openai_key, qdrant_key, qdrant_url)
