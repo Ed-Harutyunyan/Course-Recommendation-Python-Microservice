@@ -26,12 +26,13 @@ def recommend_by_keyword():
     try:
         data = request.get_json(force=True)
         keywords = data.get("keywords", [])
+        possible_course_ids = data.get("possibleCourseIds", [])
     except Exception as e:
         return jsonify({"error": "Invalid JSON", "message": str(e)}), 415
 
     query_text = ", ".join(keywords)
 
-    return generate_recommendations_by_keywords(query_text, 3)
+    return generate_recommendations_by_keywords(query_text, possible_course_ids, 5)
 
 
 @api_blueprint.route('/recommend/byPassed', methods=['POST'])

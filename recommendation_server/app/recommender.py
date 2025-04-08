@@ -51,18 +51,26 @@ openai_client = openai.Client(
 )
 
 
-def generate_recommendations_by_keywords(query_text: str, top_k: int):
+def generate_recommendations_by_keywords(query_text: str, course_ids, top_k: int):
 
     search_response = openai_client.embeddings.create(
         model="text-embedding-3-small",
         input=query_text
     )
+
     query_embedding = search_response.data[0].embedding
+
+    query_filter = Filter(
+        must=[
+            HasIdCondition(has_id=course_ids)
+        ]
+    )
+
     search_results = qdrant_client.query_points(
         collection_name=collection_name,
         query=query_embedding,
         limit=top_k,
-        query_filter=None
+        query_filter=query_filter
     )
 
     recommendations = []
@@ -70,8 +78,8 @@ def generate_recommendations_by_keywords(query_text: str, top_k: int):
         recommendations.append({
             "id": result.id,
             "courseCode": result.payload.get('courseCode'),
-            "title": result.payload.get("courseTitle"),
-            "description": result.payload.get("courseDescription"),
+            "courseTitle": result.payload.get("courseTitle"),
+            "courseDescription": result.payload.get("courseDescription"),
             "score": result.score
         })
 
@@ -82,13 +90,13 @@ def generate_recommendations_from_passed_courses(passed_ids, possible_ids, top_k
 
     passed_courses = qdrant_client.retrieve(
         collection_name=collection_name,
-        with_payload=["title", "description"],
+        with_payload=["courseTitle", "courseDescription"],
         ids = passed_ids
     )
 
     all_results = []
     for point in passed_courses:
-        description = point.payload.get("description")
+        description = point.payload.get("courseDescription")
         if description:
             search_response = openai_client.embeddings.create(
                 model="text-embedding-3-small",
@@ -124,11 +132,12 @@ def generate_recommendations_from_passed_courses(passed_ids, possible_ids, top_k
     for result in final_results:
         recommendations.append({
             "id": result.id,
-            "title": result.payload.get("title"),
-            "description": result.payload.get("description"),
+            "courseCode": result.payload.get('courseCode'),
+            "courseTitle": result.payload.get("courseTitle"),
+            "courseDescription": result.payload.get("courseDescription"),
             "score": result.score
         })
-
+    print(recommendations)
     return recommendations
 
 if __name__ == '__main__':
