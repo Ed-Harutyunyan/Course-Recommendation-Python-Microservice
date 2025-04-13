@@ -66,21 +66,23 @@ def generate_recommendations_from_passed_courses(passed_course_codes, possible_c
 
 
 #Helper
-def filter_search(course_ids, query_text, top_k):
+def filter_search(course_codes, query_text, top_k):
     search_response = openai_client.embeddings.create(
         model=AI_model,
         input=query_text
     )
+
     query_embedding = search_response.data[0].embedding
     query_filter = Filter(
         must=[
             FieldCondition(
                 key="courseCode",
-                match=MatchAny(any=course_ids)
+                match=MatchAny(any=course_codes)
             )
             # HasIdCondition(has_id=course_ids)
         ]
     )
+
     search_results = qdrant_client.query_points(
         collection_name=collection_name,
         query=query_embedding,
