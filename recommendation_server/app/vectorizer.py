@@ -1,6 +1,4 @@
-from infisical_sdk import InfisicalSDKClient
-
-from recommendation_server.app.config import qdrant_client, openai_client, collection_name
+from recommendation_server.app.config import qdrant_client, openai_client, collection_name, OUTPUT_FILE
 from recommendation_server.app.data_pre_processing import save_processed_courses
 from qdrant_client.http.models import VectorParams, Distance, PointStruct
 import json
@@ -21,7 +19,7 @@ def vectorize_courses(courses):
             )
         )
 
-    with open("data/processed_courses.json", "r", encoding="utf-8") as f:
+    with open(OUTPUT_FILE, "r", encoding="utf-8") as f:
         courses = json.load(f)
 
     points = []
@@ -38,5 +36,6 @@ def vectorize_courses(courses):
             payload=course
         )
         points.append(point)
+        print(f"{idx} Course")
 
     qdrant_client.upsert(collection_name=collection_name, points=points)

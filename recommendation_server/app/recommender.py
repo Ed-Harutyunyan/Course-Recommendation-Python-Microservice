@@ -1,29 +1,12 @@
+from qdrant_client.http.models import FieldCondition, MatchAny
 from qdrant_client.models import Filter, HasIdCondition
 
-from recommendation_server.app.config import openai_client, qdrant_client, collection_name
+from recommendation_server.app.config import openai_client, qdrant_client, collection_name, AI_model
 
 
 def generate_recommendations_by_keywords(query_text: str, course_ids, top_k: int):
 
-    search_response = openai_client.embeddings.create(
-        model="text-embedding-3-small",
-        input=query_text
-    )
-
-    query_embedding = search_response.data[0].embedding
-
-    query_filter = Filter(
-        must=[
-            HasIdCondition(has_id=course_ids)
-        ]
-    )
-
-    search_results = qdrant_client.query_points(
-        collection_name=collection_name,
-        query=query_embedding,
-        limit=top_k,
-        query_filter=query_filter
-    )
+    search_results = filter_search(course_ids, query_text, top_k)
 
     recommendations = []
     for result in search_results.points:
@@ -50,26 +33,7 @@ def generate_recommendations_from_passed_courses(passed_ids, possible_ids, top_k
     for point in passed_courses:
         description = point.payload.get("courseDescription")
         if description:
-            search_response = openai_client.embeddings.create(
-                model="text-embedding-3-small",
-                input=description
-            )
-            embedding = search_response.data[0].embedding
-
-            query_filter = Filter(
-                must=[
-                    HasIdCondition(has_id=possible_ids)
-                ]
-            )
-
-            search_results = qdrant_client.query_points(
-                collection_name=collection_name,
-                query=embedding,
-                limit=top_k,
-                query_filter=query_filter
-            )
-
-            all_results.extend(search_results.points)
+            all_results.extend(filter_search(possible_ids, description, top_k).points)
         else:
             raise ValueError("Descriptions list cannot be empty or None")
 
@@ -91,3 +55,28 @@ def generate_recommendations_from_passed_courses(passed_ids, possible_ids, top_k
         })
     print(recommendations)
     return recommendations
+
+
+#Helper
+def filter_search(course_ids, query_text, top_k):
+    search_response = openai_client.embeddings.create(
+        model=AI_model,
+        input=query_text
+    )
+    query_embedding = search_response.data[0].embedding
+    query_filter = Filter(
+        must=[
+            FieldCondition(
+                key="courseCode",
+                match=MatchAny(any=course_ids)
+            )
+            # HasIdCondition(has_id=course_ids)
+        ]
+    )
+    search_results = qdrant_client.query_points(
+        collection_name=collection_name,
+        query=query_embedding,
+        limit=top_k,
+        query_filter=query_filter
+    )
+    return search_results
