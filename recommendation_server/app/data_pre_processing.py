@@ -7,6 +7,8 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 
+from recommendation_server.app.config import OUTPUT_FILE
+
 nltk.download('punkt')
 nltk.download('stopwords')
 nltk.download('punkt_tab')
@@ -14,8 +16,6 @@ nltk.download('wordnet')
 
 lemmatizer = WordNetLemmatizer()
 stop_words = set(stopwords.words("english"))
-
-OUTPUT_FILE = "data/processed_courses.json"
 
 def preprocess_text(text: str) -> str:
 
