@@ -25,7 +25,7 @@ def recommend_by_keyword():
     try:
         data = request.get_json(force=True)
         keywords = data.get("keywords", [])
-        possible_course_ids = data.get("possibleCourseIds", [])
+        possible_course_ids = data.get("possibleCourseCodes", [])
     except Exception as e:
         return jsonify({"error": "Invalid JSON", "message": str(e)}), 415
 
@@ -42,8 +42,8 @@ def recommend_by_passed():
     except Exception as e:
         return jsonify({"error": "Invalid JSON", "message": str(e)}), 415
 
-    passed_ids = passed_and_possible_courses["passed_ids"]
-    future_ids = passed_and_possible_courses["possible_ids"]
+    passed_ids = passed_and_possible_courses["passed_course_codes"]
+    future_ids = passed_and_possible_courses["possible_course_codes"]
 
     return generate_recommendations_from_passed_courses(passed_ids, future_ids, 3)
 
