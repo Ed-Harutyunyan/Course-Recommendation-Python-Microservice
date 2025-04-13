@@ -21,19 +21,27 @@ def generate_recommendations_by_keywords(query_text: str, course_ids, top_k: int
     return recommendations
 
 
-def generate_recommendations_from_passed_courses(passed_ids, possible_ids, top_k: int):
+def generate_recommendations_from_passed_courses(passed_course_codes, possible_course_codes, top_k: int):
 
-    passed_courses = qdrant_client.retrieve(
+    passed_courses = qdrant_client.scroll(
         collection_name=collection_name,
         with_payload=["courseTitle", "courseDescription"],
-        ids = passed_ids
+        scroll_filter=Filter(
+            must=[
+                FieldCondition(
+                    key="courseCode",
+                    match=MatchAny(any=passed_course_codes)
+                )
+            ]
+        ),
     )
 
     all_results = []
-    for point in passed_courses:
+    points, _ = passed_courses
+    for point in points:
         description = point.payload.get("courseDescription")
         if description:
-            all_results.extend(filter_search(possible_ids, description, top_k).points)
+            all_results.extend(filter_search(possible_course_codes, description, top_k).points)
         else:
             raise ValueError("Descriptions list cannot be empty or None")
 
