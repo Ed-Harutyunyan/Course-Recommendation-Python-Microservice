@@ -1,6 +1,7 @@
 from dotenv import load_dotenv
 from flask import Blueprint, request, jsonify, abort
 
+from recommendation_server.app.data_pre_processing import preprocess_text
 from recommendation_server.app.recommender import generate_recommendations_by_keywords, generate_recommendations_from_passed_courses
 from recommendation_server.app.vectorizer import vectorize_courses
 
@@ -32,6 +33,31 @@ def recommend_by_keyword():
     query_text = ", ".join(keywords)
 
     return generate_recommendations_by_keywords(query_text, possible_course_ids, 5)
+
+
+@api_blueprint.route('/recommend/message', methods=['POST'])
+def recommend_by_message():
+    try:
+        data = request.get_json(force=True)
+        message = data.get("message", "")
+        possible_course_ids = data.get("possibleCourseCodes", [])
+
+        if not message:
+            return jsonify({"error": "Message is required"}), 400
+
+        # Reuse the existing preprocessing function
+        processed_text = preprocess_text(message)
+        keywords = processed_text.split()
+
+        print(keywords)
+
+        if not keywords:
+            return jsonify({"error": "No meaningful keywords found in message"}), 400
+
+        return generate_recommendations_by_keywords(" ".join(keywords), possible_course_ids, 5)
+
+    except Exception as e:
+        return jsonify({"error": "Invalid JSON", "message": str(e)}), 415
 
 
 @api_blueprint.route('/recommend/byPassed', methods=['POST'])

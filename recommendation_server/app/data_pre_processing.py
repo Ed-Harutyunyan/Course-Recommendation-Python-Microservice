@@ -16,6 +16,9 @@ nltk.download('wordnet')
 
 lemmatizer = WordNetLemmatizer()
 stop_words = set(stopwords.words("english"))
+# Add these custom stopwords to the existing ones
+additional_stopwords = {'want', 'wanted', 'wanting', 'study', 'studied', 'studying', 'learn', 'learning', 'take', 'taking'}
+stop_words = set(stopwords.words("english")).union(additional_stopwords)
 
 def preprocess_text(text: str) -> str:
 
