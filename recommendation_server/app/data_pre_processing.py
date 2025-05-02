@@ -2,23 +2,17 @@ import os
 import re
 import json
 
-import nltk
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 
 from recommendation_server.app.config import OUTPUT_FILE
+from recommendation_server.app.nltk_setup import safe_nltk_download
 
-nltk.download('punkt')
-nltk.download('stopwords')
-nltk.download('punkt_tab')
-nltk.download('wordnet')
+safe_nltk_download()
 
 lemmatizer = WordNetLemmatizer()
 stop_words = set(stopwords.words("english"))
-# Add these custom stopwords to the existing ones
-additional_stopwords = {'want', 'wanted', 'wanting', 'study', 'studied', 'studying', 'learn', 'learning', 'take', 'taking'}
-stop_words = set(stopwords.words("english")).union(additional_stopwords)
 
 def preprocess_text(text: str) -> str:
 
