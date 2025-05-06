@@ -26,7 +26,7 @@ def vectorize_courses(courses):
     for idx, course in enumerate(courses):
         text = f"{course['courseTitle']}. {course['courseDescription']}"
         response = openai_client.embeddings.create(
-            model="text-embedding-3-small",
+            model="text-embedding-3-large",
             input=text
         )
         embedding = response.data[0].embedding
