@@ -1,4 +1,4 @@
-from recommendation_server.app.config import qdrant_client, openai_client, collection_name, OUTPUT_FILE
+from recommendation_server.app.config import qdrant_client, openai_client, collection_name, OUTPUT_FILE, AI_model
 from recommendation_server.app.data_pre_processing import save_processed_courses
 from qdrant_client.http.models import VectorParams, Distance, PointStruct
 import json
@@ -26,7 +26,7 @@ def vectorize_courses(courses):
     for idx, course in enumerate(courses):
         text = f"{course['courseTitle']}. {course['courseDescription']}"
         response = openai_client.embeddings.create(
-            model="text-embedding-3-large",
+            model=AI_model,
             input=text
         )
         embedding = response.data[0].embedding
