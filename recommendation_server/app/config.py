@@ -48,5 +48,5 @@ qdrant_client = QdrantClient(
 )
 
 collection_name = "courses_collection"
-AI_model = "text-embedding-3-large"
+AI_model = "text-embedding-3-small"
 OUTPUT_FILE = "recommendation_server/data/processed_courses.json"
