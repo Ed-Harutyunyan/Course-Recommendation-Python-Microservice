@@ -1,9 +1,11 @@
+import hashlib
+
 from recommendation_server.app.config import qdrant_client, openai_client, collection_name, OUTPUT_FILE, AI_model
 from recommendation_server.app.data_pre_processing import save_processed_courses
 from qdrant_client.http.models import VectorParams, Distance, PointStruct
 import json
 
-def vectorize_courses(courses):
+def vectorize_courses(courses, batch_size=100):
 
     save_processed_courses(courses)
 
@@ -30,12 +32,16 @@ def vectorize_courses(courses):
             input=text
         )
         embedding = response.data[0].embedding
+        course_id = hashlib.md5(course['courseCode'].encode()).hexdigest()
         point = PointStruct(
-            id=course['id'],
+            id=course_id,
             vector=embedding,
             payload=course
         )
         points.append(point)
         print(f"{idx} Course")
 
-    qdrant_client.upsert(collection_name=collection_name, points=points)
+    for i in range(0, len(points), batch_size):
+        batch = points[i:i + batch_size]
+        qdrant_client.upsert(collection_name=collection_name, points=batch)
+        print(f"Upserted batch {i // batch_size + 1}")

@@ -1,5 +1,5 @@
 from qdrant_client.http.models import FieldCondition, MatchAny
-from qdrant_client.models import Filter, HasIdCondition
+from qdrant_client.models import Filter
 
 from recommendation_server.app.config import openai_client, qdrant_client, collection_name, AI_model
 
@@ -63,6 +63,15 @@ def generate_recommendations_from_passed_courses(passed_course_codes, possible_c
         })
     print(recommendations)
     return recommendations
+
+
+def delete_points():
+    qdrant_client.delete(
+        collection_name=collection_name,
+        points_selector=Filter(
+            must=[]
+        )
+    )
 
 
 #Helper
