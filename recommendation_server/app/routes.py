@@ -2,23 +2,13 @@ from dotenv import load_dotenv
 from flask import Blueprint, request, jsonify, abort
 
 from recommendation_server.app.data_pre_processing import preprocess_text
-from recommendation_server.app.recommender import generate_recommendations_by_keywords, generate_recommendations_from_passed_courses
+from recommendation_server.app.recommender import generate_recommendations_by_keywords, \
+    generate_recommendations_from_passed_courses, delete_points
 from recommendation_server.app.vectorizer import vectorize_courses
 
 load_dotenv("../../.env")
 
 api_blueprint = Blueprint('api', __name__)
-# headers = {
-#     "Authorization": f"Bearer {os.getenv('SERVICE_JWT')}",
-#     "Content-Type": "application/json"
-# }
-
-# @api_blueprint.before_request
-# def check_authorization():
-#     key = request.headers.get("PYTHON_AUTHORISATION_API_KEY")
-#     if key != os.getenv("PYTHON_AUTHORISATION_API_KEY"):
-#         abort(403)
-
 
 @api_blueprint.route('/recommend/keyword', methods=['POST'])
 def recommend_by_keyword():
@@ -45,7 +35,6 @@ def recommend_by_message():
         if not message:
             return jsonify({"error": "Message is required"}), 400
 
-        # Reuse the existing preprocessing function
         processed_text = preprocess_text(message)
         keywords = processed_text.split()
 
@@ -74,20 +63,6 @@ def recommend_by_passed():
     return generate_recommendations_from_passed_courses(passed_ids, future_ids, 3)
 
 
-# # @api_blueprint.route('/send', methods=['GET'])
-# def send_recommendations(result):
-#     print("JWT Token:", os.getenv("SERVICE_JWT"))
-#     print(result)
-#     print(headers)
-#     # try:
-#     #     callback_response = requests.post(JAVA_CALLBACK_URL, json=result, headers=headers)
-#     #     # callback_response.raise_for_status()
-#     # except Exception as e:
-#     #     return jsonify({"error": "Failed to call Java callback", "message": str(e)}), 500
-#
-#     return result, 200
-
-
 @api_blueprint.route('/vectorize', methods=['PUT'])
 def vectorize():
     try:
@@ -104,6 +79,20 @@ def vectorize():
         "status": "success"
     }), 200
 
+@api_blueprint.route('/delete/points', methods=['DELETE'])
+def delete_points_route():
+    try:
+        delete_points()
+
+    except Exception as e:
+        return jsonify({
+            "status": "error",
+            "message": str(e)
+        }), 500
+
+    return jsonify(
+        {"status": "success", "message": "All points deleted"}
+    ), 200
 
 #Testing the connection with dummy data
 @api_blueprint.route('/test', methods=['POST'])
