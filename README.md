@@ -1,68 +1,79 @@
+# Course Recommendation Python Microservice
 
-# Course Recommendation System Python Microservice
-
-Handles the vectorization of the raw data, sends it to Qdrant database and recommende courses with the provided input.
-
+This microservice is responsible for vectorizing raw course data, interacting with a Qdrant vector database, and recommending courses based on provided input. It is designed to work as part of a larger system, communicating with a Java Spring backend via RESTful APIs.
 
 ## Features
 
-* Accepts course data for vectorization
-
-* Processes student input to generate course recommendations
-
-* REST API endpoints for communication with the Java Spring backend
-
-* Deployed using Flask
-
+- Accepts and vectorizes course data for storage in Qdrant.
+- Processes student input to generate personalized course recommendations.
+- Exposes REST API endpoints for integration with other backend services.
+- Built with Flask for easy deployment and scalability.
+- Designed for integration with a Java Spring backend (secured with JWT).
 
 ## Installation
 
-Ensure you have Python installed
-```bash
-  python --version
-```
+### Prerequisites
 
-#### Setup
+- Python 3.8 or higher
+- [Qdrant](https://qdrant.tech/) instance (cloud or local)
+- Java Spring backend (for complete system integration)
+
+### Setup
 
 ```bash
-git clone <Github URL OR SSH>
-cd Recommendation_System
-```
-    
-#### install neccessary packages
-```bash
+git clone https://github.com/Ed-Harutyunyan/Course-Recommendation-Python-Microservice.git
+cd Course-Recommendation-Python-Microservice
 pip install -r requirements.txt
 ```
 
-#### Run 
-Execute ` run.py ` file to start the Python Flask Server.
-Ensure  that port 5000 is not used by other services. If yes, terminate or change the port in `config.py` file to another open port
+### Running the Service
 
+```bash
+python run.py
+```
+
+- The service defaults to port 5000. To change the port, update `config.py`.
+- Ensure port 5000 is free or change it as needed.
 
 ## API Reference
 
-#### Update current vectorized courses
+### 1. Vectorize Courses
 
-Receives the courses from backend, vectorizes it and saves it to Qdrant cloud database
+Vectorizes and stores courses in Qdrant.
 
-```http
-  PUT /api/vectorize
+**Endpoint:**
+```
+PUT /api/vectorize
 ```
 
-This is done from backend perspective with `localhost:5000` as the URI
 
-| Request Body | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `Courses`      | `json` | **Required**. New courses  |
+- Example usage: Send a PUT request from the backend to `http://localhost:5000/api/vectorize`
 
-#### POST the recommended courses to backend
+### 2. Recommend Courses
 
-Have to use the URI for the backend `localhsot:8080`
-As the backend is secured with JWT tokens, we need request headers to access backend
+Returns recommended courses based on student input.
 
-```http
-http://localhost:8080/api/course/recommendations
+**Endpoint (Java Backend):**
 ```
-| Parameters | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `headers`      | `string` | **Required**. JWT token as headers to ensure connection with the backend  |
+POST http://localhost:8080/api/course/recommendations
+```
+
+- JWT authentication required via request headers.
+- Example usage: Backend sends a POST request with proper JWT token.
+
+| Parameter | Type   | Description                            |
+|-----------|--------|----------------------------------------|
+| headers   | string | **Required**. JWT token for auth       |
+
+## Configuration
+
+- API settings and database connection details should be configured in `config.py`.
+
+
+## License
+
+[MIT License](LICENSE)
+
+---
+
+*This project is maintained by Ed-Harutyunyan. For questions or support, please open an issue on GitHub.*
