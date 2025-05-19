@@ -44,6 +44,7 @@ openai_client = openai.Client(
 qdrant_client = QdrantClient(
     url=qdrant_url.secretValue,
     api_key=qdrant_key.secretValue,
+    timeout=100,
     https=True
 )
 
